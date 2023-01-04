@@ -1,0 +1,42 @@
+import { useReducer } from "react";
+import { useState } from "react"
+
+function counterReducer(state , action){
+  let newValue = state
+  switch (action.type){
+    case 'Increment' : {
+        newValue = newValue + 1
+        break;
+    }
+    case 'Decrement' : {
+        newValue = newValue - 1
+        break;
+    }
+    case 'Inc_By_Value' : {
+        newValue = newValue + action.diff
+        break;
+    }   
+  }
+  return newValue
+}
+
+export function UseReducerExample(){
+    // const [counter , setCounter] = useState(0)
+    const [diff , setDiff] = useState('')
+    const [counter , dispatch] = useReducer(counterReducer , 0)
+    return <>
+        <div>
+            <button onClick={()=> 
+            dispatch({type :'Increment' })
+            }>Increment</button>
+            {counter}
+            <button onClick={()=> 
+            dispatch({type :'Decrement' })
+            } >Decrement</button>
+            <button onClick={()=> 
+            dispatch({type :'Inc_By_Value' , diff : Number(diff) })
+            } >Inc_By</button>
+            <input type='text' onChange={e=>setDiff(e.target.value)} value={diff}/>
+        </div>
+    </>
+}
